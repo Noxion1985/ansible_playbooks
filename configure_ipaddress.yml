@@ -1,0 +1,30 @@
+---
+- name: Stage Webservers 
+  hosts: webservers
+  become: true
+  vars:
+    - http_port: 80
+    - max_clients: 200
+  remote_user: root
+  tasks:
+    - name: Ethernet connection profile with static IP address settings
+      ansible.builtin.include_role:
+        name: rhel-system-roles.network
+      vars:
+        network_connections:
+          - name: enp1s0
+            interface_name: enp1s0
+            type: ethernet
+            autoconnect: yes
+            ip:
+              address:
+                - 192.0.2.1/24
+                - 2001:db8:1::1/64
+              gateway4: 192.0.2.254
+              gateway6: 2001:db8:1::fffe
+              dns:
+                - 192.0.2.200
+                - 2001:db8:1::ffbb
+              dns_search:
+                - example.com
+            state: up

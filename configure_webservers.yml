@@ -3,13 +3,13 @@
   hosts: webservers
   become: true
   vars:
-    http_port: 80
-    max_clients: 200
+    - http_port: 80
+    - max_clients: 200
   remote_user: root
   tasks:
-   - name: Set new IP adress
-        ip: "{{ ip4 }}"
-        interface: enp1s0
+    - name: Set new IP adress
+      - ip: "{{ ip4 }}"
+      - interface: enp1s0
     - name: Update DNF Package Cache
       dnf: update_cache=yes 
 
